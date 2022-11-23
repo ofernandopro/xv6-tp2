@@ -88,6 +88,7 @@ allocproc(void)
 found:
   p->state = EMBRYO;
   p->pid = nextpid++;
+  p->tickets = 10;
 
   release(&ptable.lock);
 
@@ -336,6 +337,29 @@ scheduler(void)
     // Enable interrupts on this processor.
     sti();
 
+    int tickets_passed = 0;
+    int totalTickets = 0;
+
+    for(p = ptable.proc; p < &ptable.proc[NPROC]; p++){
+      if(p->state != RUNNABLE)
+        continue;
+      totalTickets = totalTickets + p->tickets;  
+    }
+
+    cprintf("totalTickets -> %d", totalTickets);
+
+    int minTicketsProcess = 10000000;
+     for(p = ptable.proc; p < &ptable.proc[NPROC]; p++){
+      if(p->state != RUNNABLE)
+        continue;
+      if (p->tickets < minTicketsProcess) {
+        minTicketsProcess = p->tickets;
+      }
+    }
+
+    long winner = minTicketsProcess;
+    cprintf("winner -> %d", winner);
+
     // Loop over process table looking for process to run.
     acquire(&ptable.lock);
     for(p = ptable.proc; p < &ptable.proc[NPROC]; p++){
@@ -371,6 +395,27 @@ lottery_scheduler(void)
   for(;;){
     // Enable interrupts on this processor.
     sti();
+
+    int tickets_passed = 0;
+    int totalTickets = 0;
+
+    for(p = ptable.proc; p < &ptable.proc[NPROC]; p++){
+      if(p->state != RUNNABLE)
+        continue;
+      totalTickets = totalTickets + p->tickets;  
+    }
+
+    int minTicketsProcess = 10000000;
+     for(p = ptable.proc; p < &ptable.proc[NPROC]; p++){
+      if(p->state != RUNNABLE)
+        continue;
+      if (p->tickets < minTicketsProcess) {
+        minTicketsProcess = p->tickets;
+      }
+    }
+
+    long winner = minTicketsProcess;
+    cprintf("winner -> %d", winner);
 
     // Loop over process table looking for process to run.
     acquire(&ptable.lock);

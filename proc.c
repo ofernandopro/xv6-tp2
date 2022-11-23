@@ -624,4 +624,5 @@ user_yield(void)
 int 
 set_tickets(int tickets) {
   cprintf("Tickets");
+  return 0;
 }

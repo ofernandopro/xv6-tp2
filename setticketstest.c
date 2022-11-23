@@ -5,6 +5,9 @@
 
 int main(int argc, char* argv[]) 
 {
-    set_tickets(10);
-    exit();
+  set_tickets(10);
+
+  cprintf("myproc tickets -> %d", myproc()->tickets)
+
+  exit();
 }

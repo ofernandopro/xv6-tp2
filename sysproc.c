@@ -121,10 +121,17 @@ int
 sys_set_tickets(void) {
   int number_of_tickets;
 	
-	if(argint(0, &number_of_tickets) < 0) // Erro
+  // Erro
+	if(argint(0, &number_of_tickets) < 0)
 		return -1;
 
 	set_tickets(number_of_tickets);
 
 	return 0;
+/*
+  int n;  
+  if(argint(0, &n) < 0)  
+   return -1;  
+  proc->tickets = n;  
+  return n; */
 }

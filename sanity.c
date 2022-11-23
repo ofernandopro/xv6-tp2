@@ -1,5 +1,3 @@
-#include <stdio.h>  
-#include <stdlib.h>  
 
 #include "types.h"
 #include "stat.h"
@@ -99,7 +97,7 @@ int main(int argc, char* argv[])
     for (i = 0; i < 5 * n; i++)
     {
         int pid = fork();
-        set_tickets(rand() % 100 + 1);
+        set_tickets(20);
 
         if (pid==0)
         {

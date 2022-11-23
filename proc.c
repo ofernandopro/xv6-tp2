@@ -587,6 +587,31 @@ int wait2(int *retime, int *rutime, int *stime) {
   }
 }
 
+
+void update_stats(void)
+{
+  struct proc *p;
+  acquire(&ptable.lock);
+
+  for(p = ptable.proc; p < &ptable.proc[NPROC]; p++)
+  {
+    if (p->state == SLEEPING)
+    {
+      p->stime++;
+    }
+    else if (p->state == RUNNABLE)
+    {
+      p->retime++;
+    }
+    else if (p->state == RUNNING)
+    {
+      p->rutime++;
+    }
+  }
+
+  release(&ptable.lock);
+}
+
 int user_yield(void)
 {
   yield();

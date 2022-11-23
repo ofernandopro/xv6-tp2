@@ -336,7 +336,7 @@ scheduler(void)
   for(;;){
     // Enable interrupts on this processor.
     sti();
-
+/*
     //int tickets_passed = 0;
     int totalTickets = 0;
 
@@ -359,7 +359,7 @@ scheduler(void)
 
     long winner = minTicketsProcess;
     cprintf("winner -> %d", winner);
-
+*/
     // Loop over process table looking for process to run.
     acquire(&ptable.lock);
     for(p = ptable.proc; p < &ptable.proc[NPROC]; p++){

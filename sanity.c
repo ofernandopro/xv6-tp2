@@ -97,7 +97,7 @@ int main(int argc, char* argv[])
     for (i = 0; i < 5 * n; i++)
     {
         int pid = fork();
-        set_tickets(20);
+        //set_tickets(20);
 
         if (pid==0)
         {

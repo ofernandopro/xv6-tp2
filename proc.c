@@ -623,6 +623,6 @@ user_yield(void)
 
 int 
 set_tickets(int tickets) {
-  cprintf("Tickets -> %d", tickets);
+  cprintf("Tickets -> %d\n", tickets);
   return 0;
 }

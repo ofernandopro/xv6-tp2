@@ -119,5 +119,12 @@ sys_yield(void)
 
 int 
 sys_set_tickets(void) {
-  return set_tickets(0);
+  int number_of_tickets;
+	
+	if(argint(0, &number_of_tickets) < 0) // Erro
+		return -1;
+
+	set_tickets(number_of_tickets);
+
+	return 0;
 }

@@ -21,4 +21,5 @@
 #define SYS_mkdir  20
 #define SYS_close  21
 #define SYS_wait2  22
+#define SYS_user_yield 23
 

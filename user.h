@@ -24,6 +24,7 @@ char* sbrk(int);
 int sleep(int);
 int uptime(void);
 int wait2(int*, int*, int*);
+int user_yield(void);
 
 // ulib.c
 int stat(const char*, struct stat*);

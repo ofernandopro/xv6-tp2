@@ -586,3 +586,9 @@ int wait2(int *retime, int *rutime, int *stime) {
     sleep(curproc, &ptable.lock);  //DOC: wait-sleep
   }
 }
+
+int user_yield(void)
+{
+  yield();
+  return 0;
+}

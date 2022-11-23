@@ -7,7 +7,7 @@ int main(int argc, char* argv[])
 {
   set_tickets(10);
 
-  cprintf("myproc tickets -> %d", myproc()->tickets)
+  printf("myproc tickets -> %d", myproc()->tickets)
 
   exit();
 }

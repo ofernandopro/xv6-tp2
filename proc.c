@@ -539,7 +539,8 @@ procdump(void)
   }
 }
 
-int wait2(int *retime, int *rutime, int *stime) {
+int 
+wait2(int *retime, int *rutime, int *stime) {
   struct proc *p;
   int havekids, pid;
   struct proc *curproc = myproc();
@@ -588,7 +589,8 @@ int wait2(int *retime, int *rutime, int *stime) {
 }
 
 
-void update_stats(void)
+void 
+update_stats(void)
 {
   struct proc *p;
   acquire(&ptable.lock);
@@ -612,8 +614,14 @@ void update_stats(void)
   release(&ptable.lock);
 }
 
-int user_yield(void)
+int 
+user_yield(void)
 {
   yield();
   return 0;
+}
+
+int 
+set_tickets(int tickets) {
+  cprintf("Tickets -> %d", tickets);
 }

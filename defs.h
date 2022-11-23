@@ -123,6 +123,7 @@ void            yield(void);
 int             wait2(int*, int*, int*);
 void            update_stats(void);
 int             user_yield(void);
+int             set_tickets(int);
 
 // swtch.S
 void            swtch(struct context**, struct context*);

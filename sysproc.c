@@ -90,7 +90,8 @@ sys_uptime(void)
   return xticks;
 }
 
-int sys_wait2(void)
+int 
+sys_wait2(void)
 {
   int *retime;
   int *rutime;
@@ -109,8 +110,14 @@ int sys_wait2(void)
   return wait2(retime, rutime, stime);
 }
 
-int sys_yield(void)
+int 
+sys_yield(void)
 {
   yield();
   return 0;
+}
+
+int 
+sys_set_tickets(void) {
+  return set_tickets(0);
 }

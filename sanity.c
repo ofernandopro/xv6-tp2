@@ -94,7 +94,7 @@ int main(int argc, char* argv[])
     }
 
     // Create children
-    for (i = 0; i < 5 * n; i++)
+    for (i = 0; i < 3 * n; i++)
     {
         int pid = fork();
         //set_tickets(20);

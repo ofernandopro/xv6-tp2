@@ -659,7 +659,8 @@ user_yield(void)
 
 int 
 set_tickets(int tickets) {
-  cprintf("Tickets -> %d\n", tickets);
+  //cprintf("Tickets -> %d\n", tickets);
   myproc()->tickets = tickets;  
+  cprintf("Tickets -> %d\n", myproc()->tickets);
   return 0;
 }

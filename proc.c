@@ -337,7 +337,7 @@ scheduler(void)
     // Enable interrupts on this processor.
     sti();
 
-    int tickets_passed = 0;
+    //int tickets_passed = 0;
     int totalTickets = 0;
 
     for(p = ptable.proc; p < &ptable.proc[NPROC]; p++){
@@ -396,7 +396,7 @@ lottery_scheduler(void)
     // Enable interrupts on this processor.
     sti();
 
-    int tickets_passed = 0;
+    //int tickets_passed = 0;
     int totalTickets = 0;
 
     for(p = ptable.proc; p < &ptable.proc[NPROC]; p++){

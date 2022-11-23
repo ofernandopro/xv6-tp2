@@ -122,7 +122,7 @@ int main(int argc, char* argv[])
     }
 
     // Wait for children
-    for (i = 0; i < 5 * n; i++)
+    for (i = 0; i < 3 * n; i++)
     {
         int retime, rutime, stime;
         int pid_child = wait2(&retime, &rutime, &stime);

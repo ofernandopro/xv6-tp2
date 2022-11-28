@@ -321,7 +321,7 @@ wait(void)
 static
 unsigned long
 lcg_rand(unsigned long a) {
-  unsigned long b = 100, c = 50;
+  unsigned long b = 100, c = 48;
   return (a * b) % c;
 }
 

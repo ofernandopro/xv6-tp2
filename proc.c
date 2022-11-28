@@ -390,8 +390,8 @@ scheduler(void)
 
   // int randomQntTickets = rand() % 100 + 1;
   // set_tickets(randomQntTickets);
-  int randomQntTickets = lcg_rand(runval);
-  set_tickets(randomQntTickets);
+  // int randomQntTickets = lcg_rand(runval);
+  // set_tickets(randomQntTickets);
 
   totalTickets = lotteryTotal();
   cprintf("totalTickets: %d\n", totalTickets);

@@ -402,18 +402,21 @@ scheduler(void)
   cprintf("totalTickets: %d\n", totalTickets);
 
   if (totalTickets > 0) {
-    winnerTicket = lcg_rand(runval);
-    cprintf("WINNER TICKET: %d\n", winnerTicket);
+    // winnerTicket = lcg_rand(runval);
+    // cprintf("WINNER TICKET: %d\n", winnerTicket);
 
-    if (totalTickets < winnerTicket) {
-      winnerTicket %= totalTickets; // choose is in the interval of tickets
-    }
+    // if (totalTickets < winnerTicket) {
+    //   winnerTicket %= totalTickets; // choose is in the interval of tickets
+    // }
 
     for(p = ptable.proc; p < &ptable.proc[NPROC]; p++){
-      if(p->state == RUNNABLE) {
-        winnerTicket -= p->tickets;
-      }
-      if(p->state != RUNNABLE || winnerTicket >= 0) {
+      // if(p->state == RUNNABLE) {
+      //   winnerTicket -= p->tickets;
+      // }
+      // if(p->state != RUNNABLE || winnerTicket >= 0) {
+      //   continue;
+      // }
+      if(p->state != RUNNABLE) {
         continue;
       }
 

@@ -321,7 +321,14 @@ wait(void)
 static
 unsigned long
 lcg_rand(unsigned long a) {
-  unsigned long b = 100, c = 48;
+  unsigned long b = 279470273, c = 4294967291;
+  return (a * b) % c;
+}
+
+static
+unsigned long
+generate_number(unsigned long a) {
+  unsigned long b = 50, c = 48;
   return (a * b) % c;
 }
 
@@ -388,11 +395,9 @@ scheduler(void)
   // Loop over process table looking for process to run.
   acquire(&ptable.lock);
 
-  // int randomQntTickets = rand() % 100 + 1;
-  // set_tickets(randomQntTickets);
-  // int randomQntTickets = lcg_rand(runval);
-  // set_tickets(randomQntTickets);
-
+  int qntTickets = generate_number(runval);
+  set_tickets(qntTickets);
+  
   totalTickets = lotteryTotal();
   cprintf("totalTickets: %d\n", totalTickets);
 
@@ -412,7 +417,7 @@ scheduler(void)
         continue;
       }
 
-      cprintf("WINNER TICKET: %s - tickets: %d\n", p->name, p->tickets);
+      //cprintf("WINNER TICKET: %s - tickets: %d\n", p->name, p->tickets);
 
       // Switch to chosen process.  It is the process's job
       // to release ptable.lock and then reacquire it

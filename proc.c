@@ -398,8 +398,8 @@ scheduler(void)
   // int qntTickets = generate_number(runval);
   // set_tickets(qntTickets);
 
-  totalTickets = lotteryTotal();
-  cprintf("totalTickets: %d\n", totalTickets);
+  // totalTickets = lotteryTotal();
+  // cprintf("totalTickets: %d\n", totalTickets);
 
   if (totalTickets > 0) {
     // winnerTicket = lcg_rand(runval);

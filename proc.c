@@ -388,13 +388,14 @@ scheduler(void)
   // Loop over process table looking for process to run.
   acquire(&ptable.lock);
 
-  int randomQntTickets = rand() % 100 + 1;
-  set_tickets(randomQntTickets);
+  // int randomQntTickets = rand() % 100 + 1;
+  // set_tickets(randomQntTickets);
   totalTickets = lotteryTotal();
   cprintf("totalTickets: %d\n", totalTickets);
 
   if (totalTickets > 0) {
     winnerTicket = lcg_rand(runval);
+    cprintf("WINNER TICKET: %d\n", winnerTicket);
 
     if (totalTickets < winnerTicket) {
       winnerTicket %= totalTickets; // choose is in the interval of tickets
@@ -408,7 +409,7 @@ scheduler(void)
         continue;
       }
 
-      cprintf("WINNER TICKET: %s - tickets: %d\n", p->name, p->tickets);
+      //cprintf("WINNER TICKET: %s - tickets: %d\n", p->name, p->tickets);
 
       // Switch to chosen process.  It is the process's job
       // to release ptable.lock and then reacquire it

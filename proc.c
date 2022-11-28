@@ -386,6 +386,7 @@ scheduler(void)
     acquire(&ptable.lock);
 
   totalTickets = lotteryTotal();
+  cprintf("totalTickets: %d\n", totalTickets);
 
   if (totalTickets > 0) {
     winnerTicket = lcg_rand(runval);

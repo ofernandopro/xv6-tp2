@@ -318,6 +318,25 @@ wait(void)
   }
 }
 
+static
+unsigned long
+lcg_rand(unsigned long a) {
+  unsigned long b = 279470273, c = 4294967291;
+  return (a * b) % c;
+}
+
+int lotteryTotal(void) {
+  struct proc *p;
+  int total_tickets = 0;
+
+  for (p = ptable.proc; p < &ptable.proc[NPROC]; p++) {
+    if (p->state == RUNNABLE) {
+      total_tickets += p->tickets;
+    }
+  }
+  return total_tickets;
+}
+
 //PAGEBREAK: 42
 // Per-CPU process scheduler.
 // Each CPU calls scheduler() after setting itself up.
@@ -332,8 +351,11 @@ scheduler(void)
   struct proc *p;
   struct cpu *c = mycpu();
   c->proc = 0;
+  int totalTickets, runval = 0;
+  int winnerTicket;
   
   for(;;){
+    runval++;
     // Enable interrupts on this processor.
     sti();
 /*
@@ -346,7 +368,7 @@ scheduler(void)
       totalTickets = totalTickets + p->tickets;  
     }
 
-    cprintf("totalTickets -> %d", totalTickets);
+    //cprintf("totalTickets -> %d", totalTickets);
 
     int minTicketsProcess = 10000000;
      for(p = ptable.proc; p < &ptable.proc[NPROC]; p++){
@@ -358,13 +380,30 @@ scheduler(void)
     }
 
     long winner = minTicketsProcess;
-    cprintf("winner -> %d", winner);
+    //cprintf("winner -> %d", winner);
 */
     // Loop over process table looking for process to run.
     acquire(&ptable.lock);
+
+  totalTickets = lotteryTotal();
+
+  if (totalTickets > 0) {
+    winnerTicket = lcg_rand(runval);
+
+    if (totalTickets < winnerTicket) {
+      winnerTicket %= totalTickets; // choose is in the interval of tickets
+    }
+  
+
     for(p = ptable.proc; p < &ptable.proc[NPROC]; p++){
-      if(p->state != RUNNABLE)
+      if(p->state == RUNNABLE) {
+        winnerTicket -= p->tickets;
+      }
+      if(p->state != RUNNABLE || winnerTicket >= 0) {
         continue;
+      }
+
+      cprintf("WINNER TICKET: %s\n", p->name);
 
       // Switch to chosen process.  It is the process's job
       // to release ptable.lock and then reacquire it
@@ -381,10 +420,10 @@ scheduler(void)
       c->proc = 0;
     }
     release(&ptable.lock);
-
+  }
   }
 }
-
+/*
 void
 lottery_scheduler(void)
 {
@@ -440,7 +479,7 @@ lottery_scheduler(void)
     release(&ptable.lock);
 
   }
-}
+}*/
 
 // Enter scheduler.  Must hold only ptable.lock
 // and have changed proc->state. Saves and restores

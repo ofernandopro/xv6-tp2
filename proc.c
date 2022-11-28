@@ -403,7 +403,7 @@ scheduler(void)
         continue;
       }
 
-      cprintf("WINNER TICKET: %s\n", p->name);
+      cprintf("WINNER TICKET: %s - tickets: %d\n", p->name, p->tickets);
 
       // Switch to chosen process.  It is the process's job
       // to release ptable.lock and then reacquire it

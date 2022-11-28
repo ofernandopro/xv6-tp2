@@ -350,7 +350,7 @@ scheduler(void)
 {
   struct proc *p;
   struct cpu *c = mycpu();
-  c->proc = 0;
+  //c->proc = 0;
   int totalTickets, runval = 0;
   int winnerTicket;
   

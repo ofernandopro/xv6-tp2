@@ -345,7 +345,7 @@ int lotteryTotal(void) {
 //  - swtch to start running that process
 //  - eventually that process transfers control
 //      via swtch back to the scheduler.
-/*
+
 void
 scheduler(void)
 {
@@ -359,7 +359,7 @@ scheduler(void)
     runval++;
     // Enable interrupts on this processor.
     sti();
-    */
+    
 /*
     //int tickets_passed = 0;
     int totalTickets = 0;
@@ -384,10 +384,12 @@ scheduler(void)
     long winner = minTicketsProcess;
     //cprintf("winner -> %d", winner);
 */
-/*
-    // Loop over process table looking for process to run.
-    acquire(&ptable.lock);
 
+  // Loop over process table looking for process to run.
+  acquire(&ptable.lock);
+
+  int randomQntTickets = rand() % 100 + 1;
+  set_tickets(randomQntTickets);
   totalTickets = lotteryTotal();
   cprintf("totalTickets: %d\n", totalTickets);
 
@@ -397,7 +399,6 @@ scheduler(void)
     if (totalTickets < winnerTicket) {
       winnerTicket %= totalTickets; // choose is in the interval of tickets
     }
-  
 
     for(p = ptable.proc; p < &ptable.proc[NPROC]; p++){
       if(p->state == RUNNABLE) {
@@ -426,21 +427,28 @@ scheduler(void)
     release(&ptable.lock);
   }
   }
-}*/
-
+}
+/*
 void
 scheduler(void)
 {
   struct proc *p;
   struct cpu *c = mycpu();
   c->proc = 0;
+  int totalTickets, runval = 0;
+  int winnerTicket;
   
   for(;;){
+    runval++;
     // Enable interrupts on this processor.
     sti();
 
     // Loop over process table looking for process to run.
     acquire(&ptable.lock);
+
+    int randomQntTickets = rand() % 100 + 1;
+    set_tickets(randomQntTickets);
+
     for(p = ptable.proc; p < &ptable.proc[NPROC]; p++){
       if(p->state != RUNNABLE)
         continue;
@@ -463,7 +471,7 @@ scheduler(void)
 
   }
 }
-
+*/
 /*
 void
 lottery_scheduler(void)

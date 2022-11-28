@@ -390,6 +390,9 @@ scheduler(void)
 
   // int randomQntTickets = rand() % 100 + 1;
   // set_tickets(randomQntTickets);
+  int randomQntTickets = lcg_rand(runval);
+  set_tickets(randomQntTickets);
+
   totalTickets = lotteryTotal();
   cprintf("totalTickets: %d\n", totalTickets);
 
@@ -409,7 +412,7 @@ scheduler(void)
         continue;
       }
 
-      //cprintf("WINNER TICKET: %s - tickets: %d\n", p->name, p->tickets);
+      cprintf("WINNER TICKET: %s - tickets: %d\n", p->name, p->tickets);
 
       // Switch to chosen process.  It is the process's job
       // to release ptable.lock and then reacquire it

@@ -401,7 +401,7 @@ scheduler(void)
   // totalTickets = lotteryTotal();
   // cprintf("totalTickets: %d\n", totalTickets);
 
-  if (totalTickets > 0) {
+  //if (totalTickets > 0) {
     // winnerTicket = lcg_rand(runval);
     // cprintf("WINNER TICKET: %d\n", winnerTicket);
 
@@ -437,7 +437,7 @@ scheduler(void)
       c->proc = 0;
     }
     release(&ptable.lock);
-  }
+  //}
   }
 }
 /*

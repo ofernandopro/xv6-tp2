@@ -323,14 +323,14 @@ wait(void)
     sleep(curproc, &ptable.lock);  //DOC: wait-sleep
   }
 }
-
+/*
 static
 unsigned long
 lcg_rand(unsigned long a) {
-  unsigned long b = 279470273, c = 4294967291;
+  unsigned long b = 2794, c = 4294;
   return (a * b) % c;
 }
-
+*/
 int lotteryTotal(void) {
   struct proc *p;
   int total_tickets = 0;
@@ -402,7 +402,7 @@ scheduler(void)
   //cprintf("totalTickets: %d\n", totalTickets);
 
   if (totalTickets > 0) {
-    winnerTicket = lcg_rand(runval);
+    winnerTicket = random_at_most(totalTickets);
     cprintf("WINNER TICKET: %d\n", winnerTicket);
 
     if (totalTickets < winnerTicket) {

@@ -579,8 +579,6 @@ void scheduler(void)
     long total = getRunnableProcTickets() * 1LL;
     long win_ticket = random_at_most(total);
 
-    cprintf("win_ticket %d", win_ticket);
-
     for (p = ptable.proc; p < &ptable.proc[NPROC]; p++)
     {
       if (p->state == RUNNABLE)

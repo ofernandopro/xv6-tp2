@@ -591,6 +591,15 @@ int getProcWithLessTickets(void)
   return total+1;
 }
 
+int settickets(int pid, int tickets) {
+  struct proc *p;
+  for (p = ptable.proc; p < &ptable.proc[NPROC]; p++) {
+    if (p->pid == pid) {
+      p->tickets = tickets;
+    }
+  }
+}
+
 void scheduler(void)
 {
   struct proc *p;
@@ -603,15 +612,25 @@ void scheduler(void)
     acquire(&ptable.lock); // Loop over process table looking for process to run.
     //long total = getRunnableProcTickets() * 1LL;
     //long win_ticket = random_at_most(total);
+
+    int aux = 10;
+    for (p = ptable.proc; p < &ptable.proc[NPROC]; p++) {
+      if (p->state == RUNNABLE) {
+        settickets(p->pid, aux);
+        aux += 5;
+      }
+    }
+
     long win_ticket = getProcWithLessTickets();
 
     cprintf("win_ticket: %d\n", win_ticket);
 
     for (p = ptable.proc; p < &ptable.proc[NPROC]; p++) {
-      if (p->state == RUNNABLE)
+      if (p->state == RUNNABLE) 
         cur_total += p->tickets;
-      else
+      else 
         continue;
+      
       if (cur_total > win_ticket) // winner process
       {
         // Switch to chosen process.  It is the process's job to release ptable.lock and then reacquire it before jumping back to us.

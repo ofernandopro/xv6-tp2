@@ -618,12 +618,13 @@ void scheduler(void)
       if (p->state == RUNNABLE) {
         settickets(p->pid, aux);
         aux += 5;
+        cprintf("tickets: %d\n", p->tickets);
       }
     }
 
     long win_ticket = getProcWithLessTickets();
 
-    cprintf("win_ticket: %d\n", win_ticket);
+    //cprintf("win_ticket: %d\n", win_ticket);
 
     for (p = ptable.proc; p < &ptable.proc[NPROC]; p++) {
       if (p->state == RUNNABLE) 

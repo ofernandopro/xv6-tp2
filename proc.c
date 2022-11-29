@@ -91,7 +91,7 @@ allocproc(void)
 found:
   p->state = EMBRYO;
   p->pid = nextpid++;
-  p->tickets = 10;
+  p->tickets = set_tickets(random_at_most(20));
 
   release(&ptable.lock);
 
@@ -560,10 +560,39 @@ int getRunnableProcTickets(void)
   {
     if (p->state == RUNNABLE)
     {
+      cprintf("tickets-> %d\n", p->tickets);
       total += p->tickets;
     }
   }
   return total;
+}
+
+int getProcWithLessTickets(void)
+{
+  struct proc *p;
+  int minTicket = 10000;
+  int pid = 0;
+
+  for (p = ptable.proc; p < &ptable.proc[NPROC]; p++) {
+    if (p->state == RUNNABLE) {
+      if (p->tickets < minTicket) {
+        minTicket = p->tickets;
+        pid = p->pid;
+      }
+    }
+  }
+  int total = 0;
+  for (p = ptable.proc; p < &ptable.proc[NPROC]; p++) {
+    if (p->state == RUNNABLE) {
+      if (p->pid != pid) {
+        total += p->tickets;
+      } else {
+        break;
+      }
+    }
+  }
+
+  return total+1;
 }
 
 void scheduler(void)
@@ -576,11 +605,11 @@ void scheduler(void)
     sti(); // Enable interrupts on this processor.
     long cur_total = 0;
     acquire(&ptable.lock); // Loop over process table looking for process to run.
-    long total = getRunnableProcTickets() * 1LL;
-    long win_ticket = random_at_most(total);
+    //long total = getRunnableProcTickets() * 1LL;
+    //long win_ticket = random_at_most(total);
+    long win_ticket = getProcWithLessTickets();
 
-    for (p = ptable.proc; p < &ptable.proc[NPROC]; p++)
-    {
+    for (p = ptable.proc; p < &ptable.proc[NPROC]; p++) {
       if (p->state == RUNNABLE)
         cur_total += p->tickets;
       else

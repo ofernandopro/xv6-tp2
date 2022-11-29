@@ -591,13 +591,8 @@ int getProcWithLessTickets(void)
   return total+1;
 }
 
-int settickets(int pid, int tickets) {
-  struct proc *p;
-  for (p = ptable.proc; p < &ptable.proc[NPROC]; p++) {
-    if (p->pid == pid) {
-      p->tickets = tickets;
-    }
-  }
+int settickets(int tickets) {
+  myproc()->tickets = tickets;
 }
 
 void scheduler(void)
@@ -616,7 +611,7 @@ void scheduler(void)
     int aux = 10;
     for (p = ptable.proc; p < &ptable.proc[NPROC]; p++) {
       if (p->state == RUNNABLE) {
-        settickets(p->pid, aux);
+        settickets(aux);
         aux += 5;
         cprintf("tickets: %d\n", p->tickets);
       }

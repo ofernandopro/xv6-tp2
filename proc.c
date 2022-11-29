@@ -317,7 +317,7 @@ wait(void)
     sleep(curproc, &ptable.lock);  //DOC: wait-sleep
   }
 }
-
+/*
 static
 unsigned long
 lcg_rand(unsigned long a) {
@@ -342,7 +342,7 @@ int lotteryTotal(void) {
     }
   }
   return total_tickets;
-}
+}*/
 
 //PAGEBREAK: 42
 // Per-CPU process scheduler.

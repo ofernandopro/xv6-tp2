@@ -94,7 +94,7 @@ found:
   p->state = EMBRYO;
   p->pid = nextpid++;
   //p->tickets = set_tickets(random_at_most(20));
-  p->tickets = qntTickets++;
+  p->tickets = 10;
 
   release(&ptable.lock);
 
@@ -962,6 +962,6 @@ int
 set_tickets(int tickets) {
   //cprintf("Tickets -> %d\n", tickets);
   myproc()->tickets = tickets;  
-  cprintf("Tickets -> %d\n", myproc()->tickets);
+  //cprintf("Tickets -> %d\n", myproc()->tickets);
   return 0;
 }

@@ -3,7 +3,7 @@
 #include "stat.h"
 #include "user.h"
 #include "fcntl.h"
- 
+#include "rand.h"
 
 void simulateCPUBursts()
 {
@@ -97,7 +97,7 @@ int main(int argc, char* argv[])
     for (i = 0; i < 3 * n; i++)
     {
         int pid = fork();
-        //set_tickets(20);
+        set_tickets(random_at_most(20));
 
         if (pid==0)
         {

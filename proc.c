@@ -594,7 +594,7 @@ int getProcWithLessTickets(void)
       }
     }
   }
-
+  cprintf("Tickets Total: %d\n", total+1);
   return total+1;
 }
 

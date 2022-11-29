@@ -608,9 +608,9 @@ void scheduler(void)
     sti(); // Enable interrupts on this processor.
     long cur_total = 0;
     acquire(&ptable.lock); // Loop over process table looking for process to run.
-    long total = getRunnableProcTickets() * 1LL;
-    long win_ticket = random_at_most(total);
-    //long win_ticket = getProcWithLessTickets();
+    //long total = getRunnableProcTickets() * 1LL;
+    //long win_ticket = random_at_most(total);
+    long win_ticket = getProcWithLessTickets();
 
     for (p = ptable.proc; p < &ptable.proc[NPROC]; p++) {
       if (p->state == RUNNABLE)

@@ -94,11 +94,11 @@ int main(int argc, char* argv[])
     }
 
     // Create children
-    int aux = 10;
+    //int aux = 10;
     for (i = 0; i < 3 * n; i++)
     {
         int pid = fork();
-        set_tickets(aux * (i+1));
+        //set_tickets(aux * (i+1));
 
         if (pid==0)
         {

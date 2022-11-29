@@ -356,18 +356,8 @@ int lotteryTotal(void) {
 void
 scheduler(void)
 {
-  struct proc *p;
-  struct cpu *c = mycpu();
-  //c->proc = 0;
-  int totalTickets, runval = 0;
-  int winnerTicket;
-  
-  for(;;){
-    runval++;
-    // Enable interrupts on this processor.
-    sti();
-    
-/*
+
+/* LOGO DEPOIS DO sti()
     //int tickets_passed = 0;
     int totalTickets = 0;
 
@@ -392,14 +382,26 @@ scheduler(void)
     //cprintf("winner -> %d", winner);
 */
 
+  struct proc *p;
+  struct cpu *c = mycpu();
+  //c->proc = 0;
+  int totalTickets, runval = 0;
+  int winnerTicket;
+  
+  for(;;){
+    runval++;
+    // Enable interrupts on this processor.
+    sti();
+
   // Loop over process table looking for process to run.
   acquire(&ptable.lock);
 
-  // int qntTickets = generate_number(runval);
-  // set_tickets(qntTickets);
+  int qntTickets = generate_number(runval);
+  set_tickets(qntTickets);
 
-  // totalTickets = lotteryTotal();
-  // cprintf("totalTickets: %d\n", totalTickets);
+  totalTickets = lotteryTotal();
+  cprintf("qntTickets: %d\n", p->tickets);
+  cprintf("totalTickets: %d\n", totalTickets);
 
   //if (totalTickets > 0) {
     // winnerTicket = lcg_rand(runval);

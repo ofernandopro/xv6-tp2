@@ -396,8 +396,7 @@ scheduler(void)
   // Loop over process table looking for process to run.
   acquire(&ptable.lock);
 
-  int qntTickets = generate_number(runval);
-  set_tickets(qntTickets);
+  set_tickets(runval);
 
   //totalTickets = lotteryTotal();
   cprintf("qntTickets: %d\n", p->tickets);

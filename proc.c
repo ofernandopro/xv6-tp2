@@ -8,6 +8,8 @@
 #include "spinlock.h"
 #include "rand.h"
 
+static int all_tickets = 0;
+
 struct {
   struct spinlock lock;
   struct proc proc[NPROC];
@@ -491,7 +493,7 @@ scheduler(void)
   }
 }
 */
-
+/*
 void
 scheduler(void)
 {
@@ -546,6 +548,63 @@ scheduler(void)
     }
     release(&ptable.lock);
 
+  }
+}
+*/
+
+int getRunnableProcTickets(void)
+{
+  struct proc *p;
+  int total = 0;
+  for (p = ptable.proc; p < &ptable.proc[NPROC]; p++)
+  {
+    if (p->state == RUNNABLE)
+    {
+      total += p->tickets;
+    }
+  }
+  return total;
+}
+
+void scheduler(void)
+{
+  struct proc *p;
+  struct cpu *c = mycpu();
+  c->proc = 0;
+  for (;;)
+  {
+    sti(); // Enable interrupts on this processor.
+    long cur_total = 0;
+    acquire(&ptable.lock); // Loop over process table looking for process to run.
+    long total = getRunnableProcTickets() * 1LL;
+    long win_ticket = random_at_most(total);
+
+    for (p = ptable.proc; p < &ptable.proc[NPROC]; p++)
+    {
+      if (p->state == RUNNABLE)
+        cur_total += p->tickets;
+      else
+        continue;
+      if (cur_total > win_ticket) // winner process
+      {
+        // Switch to chosen process.  It is the process's job to release ptable.lock and then reacquire it before jumping back to us.
+        c->proc = p;
+        switchuvm(p);
+        p->state = RUNNING;
+        
+        int tick_start = ticks;
+        swtch(&(c->scheduler), p->context);
+        int tick_end = ticks;
+        p->tickets += (tick_end - tick_start);
+        switchkvm();
+        // Process is done running for now. It should have changed its p->state before coming back.
+        c->proc = 0;
+        break;
+      }
+      else
+        continue;
+    }
+    release(&ptable.lock);
   }
 }
 

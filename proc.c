@@ -381,7 +381,7 @@ scheduler(void)
     long winner = minTicketsProcess;
     //cprintf("winner -> %d", winner);
 */
-
+/*
   struct proc *p;
   struct cpu *c = mycpu();
   //c->proc = 0;
@@ -440,7 +440,12 @@ scheduler(void)
     release(&ptable.lock);
   //}
   }
+  
 }
+*/
+
+
+
 /*
 void
 scheduler(void)
@@ -485,6 +490,63 @@ scheduler(void)
   }
 }
 */
+
+void
+scheduler(void)
+{
+  struct proc *p;
+  int foundproc = 1;
+
+  for(;;){
+    // Enable interrupts on this processor.
+    sti();
+
+    
+    int tickets_passed = 0;
+    int totalTickets = 0;
+
+    for(p = ptable.proc; p < &ptable.proc[NPROC]; p++){
+      if(p->state != RUNNABLE)
+        continue;
+      totalTickets = totalTickets + p->tickets;  
+    }
+
+    long winner = random_at_most(totalTickets);
+
+
+    if (!foundproc) hlt();
+    foundproc = 0;
+
+    // Loop over process table looking for process to run.
+    acquire(&ptable.lock);
+    for(p = ptable.proc; p < &ptable.proc[NPROC]; p++){
+      if(p->state != RUNNABLE)
+        continue;
+      tickets_passed += p->tickets;
+      if(tickets_passed < winner){
+        continue;
+      }
+     // cprintf("tickets are : %d ,  rand no is %ld\n",p->tickets , random_at_most(10000));
+      // Switch to chosen process.  It is the process's job
+      // to release ptable.lock and then reacquire it
+      // before jumping back to us.
+      foundproc = 1;
+      proc = p;
+      switchuvm(p);
+      p->state = RUNNING;
+      swtch(&cpu->scheduler, proc->context);
+      switchkvm();
+
+      // Process is done running for now.
+      // It should have changed its p->state before coming back.
+      proc = 0;
+      break;
+    }
+    release(&ptable.lock);
+
+  }
+}
+
 /*
 void
 lottery_scheduler(void)

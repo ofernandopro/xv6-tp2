@@ -561,7 +561,7 @@ int getRunnableProcTickets(void)
   {
     if (p->state == RUNNABLE)
     {
-      //cprintf("tickets-> %d\n", p->tickets);
+      cprintf("tickets-> %d\n", p->tickets);
       total += p->tickets;
     }
   }

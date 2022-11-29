@@ -352,11 +352,11 @@ int lotteryTotal(void) {
 //  - swtch to start running that process
 //  - eventually that process transfers control
 //      via swtch back to the scheduler.
-
+/*
 void
 scheduler(void)
 {
-
+*/
 /* LOGO DEPOIS DO sti()
     //int tickets_passed = 0;
     int totalTickets = 0;
@@ -495,6 +495,7 @@ void
 scheduler(void)
 {
   struct proc *p;
+  struct cpu *c = mycpu();
   int foundproc = 1;
 
   for(;;){
@@ -531,15 +532,15 @@ scheduler(void)
       // to release ptable.lock and then reacquire it
       // before jumping back to us.
       foundproc = 1;
-      proc = p;
+      c->proc = p;
       switchuvm(p);
       p->state = RUNNING;
-      swtch(&cpu->scheduler, proc->context);
+      swtch(&c->scheduler, p->context);
       switchkvm();
 
       // Process is done running for now.
       // It should have changed its p->state before coming back.
-      proc = 0;
+      p = 0;
       break;
     }
     release(&ptable.lock);

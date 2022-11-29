@@ -91,7 +91,8 @@ allocproc(void)
 found:
   p->state = EMBRYO;
   p->pid = nextpid++;
-  p->tickets = set_tickets(random_at_most(20));
+  //p->tickets = set_tickets(random_at_most(20));
+  p->tickets = 10;
 
   release(&ptable.lock);
 
@@ -560,7 +561,7 @@ int getRunnableProcTickets(void)
   {
     if (p->state == RUNNABLE)
     {
-      cprintf("tickets-> %d\n", p->tickets);
+      //cprintf("tickets-> %d\n", p->tickets);
       total += p->tickets;
     }
   }

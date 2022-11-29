@@ -330,7 +330,7 @@ lcg_rand(unsigned long a) {
   unsigned long b = 2794, c = 4294;
   return (a * b) % c;
 }
-*/
+
 int lotteryTotal(void) {
   struct proc *p;
   int total_tickets = 0;
@@ -342,7 +342,7 @@ int lotteryTotal(void) {
   }
   return total_tickets;
 }
-
+*/
 //PAGEBREAK: 42
 // Per-CPU process scheduler.
 // Each CPU calls scheduler() after setting itself up.
@@ -351,11 +351,11 @@ int lotteryTotal(void) {
 //  - swtch to start running that process
 //  - eventually that process transfers control
 //      via swtch back to the scheduler.
-
+/*
 void
 scheduler(void)
 {
-
+*/
 /* LOGO DEPOIS DO sti()
     //int tickets_passed = 0;
     int totalTickets = 0;
@@ -380,7 +380,7 @@ scheduler(void)
     long winner = minTicketsProcess;
     //cprintf("winner -> %d", winner);
 */
-
+/*
   struct proc *p;
   struct cpu *c = mycpu();
   //c->proc = 0;
@@ -402,7 +402,7 @@ scheduler(void)
   //cprintf("totalTickets: %d\n", totalTickets);
 
   if (totalTickets > 0) {
-    winnerTicket = random_at_most(totalTickets);
+    winnerTicket = lcg_rand(runval);
     cprintf("WINNER TICKET: %d\n", winnerTicket);
 
     if (totalTickets < winnerTicket) {
@@ -441,7 +441,7 @@ scheduler(void)
   }
   
 }
-
+*/
 
 
 
@@ -590,7 +590,7 @@ int getProcWithLessTickets(void)
   //cprintf("Tickets Total: %d\n", total+1);
   return total+1;
 }
-/*
+
 void scheduler(void)
 {
   struct proc *p;
@@ -604,6 +604,8 @@ void scheduler(void)
     //long total = getRunnableProcTickets() * 1LL;
     //long win_ticket = random_at_most(total);
     long win_ticket = getProcWithLessTickets();
+
+    cprintf("win_ticket: %d\n", win_ticket);
 
     for (p = ptable.proc; p < &ptable.proc[NPROC]; p++) {
       if (p->state == RUNNABLE)
@@ -632,7 +634,7 @@ void scheduler(void)
     release(&ptable.lock);
   }
 }
-*/
+
 /*
 void
 lottery_scheduler(void)

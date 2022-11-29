@@ -3,7 +3,6 @@
 #include "stat.h"
 #include "user.h"
 #include "fcntl.h"
-#include "rand.h"
 
 void simulateCPUBursts()
 {

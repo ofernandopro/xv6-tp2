@@ -323,18 +323,11 @@ wait(void)
     sleep(curproc, &ptable.lock);  //DOC: wait-sleep
   }
 }
-/*
+
 static
 unsigned long
 lcg_rand(unsigned long a) {
   unsigned long b = 279470273, c = 4294967291;
-  return (a * b) % c;
-}
-
-static
-unsigned long
-generate_number(unsigned long a) {
-  unsigned long b = 50, c = 48;
   return (a * b) % c;
 }
 
@@ -348,7 +341,7 @@ int lotteryTotal(void) {
     }
   }
   return total_tickets;
-}*/
+}
 
 //PAGEBREAK: 42
 // Per-CPU process scheduler.
@@ -358,11 +351,11 @@ int lotteryTotal(void) {
 //  - swtch to start running that process
 //  - eventually that process transfers control
 //      via swtch back to the scheduler.
-/*
+
 void
 scheduler(void)
 {
-*/
+
 /* LOGO DEPOIS DO sti()
     //int tickets_passed = 0;
     int totalTickets = 0;
@@ -387,7 +380,7 @@ scheduler(void)
     long winner = minTicketsProcess;
     //cprintf("winner -> %d", winner);
 */
-/*
+
   struct proc *p;
   struct cpu *c = mycpu();
   //c->proc = 0;
@@ -402,32 +395,32 @@ scheduler(void)
   // Loop over process table looking for process to run.
   acquire(&ptable.lock);
 
-  set_tickets(runval);
+  //set_tickets(runval);
 
-  //totalTickets = lotteryTotal();
+  totalTickets = lotteryTotal();
   cprintf("qntTickets: %d\n", p->tickets);
   //cprintf("totalTickets: %d\n", totalTickets);
 
-  //if (totalTickets > 0) {
-    // winnerTicket = lcg_rand(runval);
-    // cprintf("WINNER TICKET: %d\n", winnerTicket);
+  if (totalTickets > 0) {
+    winnerTicket = lcg_rand(runval);
+    cprintf("WINNER TICKET: %d\n", winnerTicket);
 
-    // if (totalTickets < winnerTicket) {
-    //   winnerTicket %= totalTickets; // choose is in the interval of tickets
-    // }
+    if (totalTickets < winnerTicket) {
+      winnerTicket %= totalTickets; // choose is in the interval of tickets
+    }
 
     for(p = ptable.proc; p < &ptable.proc[NPROC]; p++){
-      // if(p->state == RUNNABLE) {
-      //   winnerTicket -= p->tickets;
-      // }
-      // if(p->state != RUNNABLE || winnerTicket >= 0) {
-      //   continue;
-      // }
+      if(p->state == RUNNABLE) {
+        winnerTicket -= p->tickets;
+      }
+      if(p->state != RUNNABLE || winnerTicket >= 0) {
+        continue;
+      }
       if(p->state != RUNNABLE) {
         continue;
       }
 
-      //cprintf("WINNER TICKET: %s - tickets: %d\n", p->name, p->tickets);
+      cprintf("WINNER TICKET: %s - tickets: %d\n", p->name, p->tickets);
 
       // Switch to chosen process.  It is the process's job
       // to release ptable.lock and then reacquire it
@@ -444,11 +437,11 @@ scheduler(void)
       c->proc = 0;
     }
     release(&ptable.lock);
-  //}
+  }
   }
   
 }
-*/
+
 
 
 
@@ -597,7 +590,7 @@ int getProcWithLessTickets(void)
   //cprintf("Tickets Total: %d\n", total+1);
   return total+1;
 }
-
+/*
 void scheduler(void)
 {
   struct proc *p;
@@ -639,7 +632,7 @@ void scheduler(void)
     release(&ptable.lock);
   }
 }
-
+*/
 /*
 void
 lottery_scheduler(void)

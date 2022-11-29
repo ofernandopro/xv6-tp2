@@ -6,6 +6,7 @@
 int main(int argc, char* argv[]) 
 {
 
+
   int tickets = atoi(argv[1]);
   set_tickets(tickets);
 

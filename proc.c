@@ -68,6 +68,8 @@ myproc(void) {
   return p;
 }
 
+static int qntTickets = 0;
+
 //PAGEBREAK: 32
 // Look in the process table for an UNUSED proc.
 // If found, change state to EMBRYO and initialize
@@ -92,7 +94,7 @@ found:
   p->state = EMBRYO;
   p->pid = nextpid++;
   //p->tickets = set_tickets(random_at_most(20));
-  p->tickets = 10;
+  p->tickets = qntTickets++;
 
   release(&ptable.lock);
 

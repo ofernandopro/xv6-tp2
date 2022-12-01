@@ -591,8 +591,13 @@ int getProcWithLessTickets(void)
   return total+1;
 }
 
-int settickets(int tickets) {
-  myproc()->tickets = tickets;
+int settickets(int pid, int tickets) {
+  struct proc *p;
+  for (p = ptable.proc; p < &ptable.proc[NPROC]; p++) {
+    if (p->pid == pid) {
+      p->tickets = tickets;
+    }
+  }
 }
 
 void scheduler(void)
@@ -608,14 +613,14 @@ void scheduler(void)
     //long total = getRunnableProcTickets() * 1LL;
     //long win_ticket = random_at_most(total);
 
-    int aux = 10;
-    for (p = ptable.proc; p < &ptable.proc[NPROC]; p++) {
-      if (p->state == RUNNABLE) {
-        settickets(aux);
-        aux += 5;
-        cprintf("tickets: %d\n", p->tickets);
-      }
-    }
+    // int aux = 10;
+    // for (p = ptable.proc; p < &ptable.proc[NPROC]; p++) {
+    //   if (p->state == RUNNABLE) {
+    //     settickets(aux);
+    //     aux += 5;
+    //     cprintf("tickets: %d\n", p->tickets);
+    //   }
+    // }
 
     long win_ticket = getProcWithLessTickets();
 

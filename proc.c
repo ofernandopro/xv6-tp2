@@ -93,7 +93,6 @@ allocproc(void)
 found:
   p->state = EMBRYO;
   p->pid = nextpid++;
-  //p->tickets = set_tickets(random_at_most(20));
   p->tickets = 10;
 
   release(&ptable.lock);
@@ -206,6 +205,7 @@ fork(void)
   np->sz = curproc->sz;
   np->parent = curproc;
   *np->tf = *curproc->tf;
+  *np->tickets = *curproc->tickets;
 
   // Clear %eax so that fork returns 0 in the child.
   np->tf->eax = 0;

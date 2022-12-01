@@ -735,14 +735,12 @@ wait2(int *retime, int *rutime, int *stime) {
   struct proc *curproc = myproc();
   acquire(&ptable.lock);
   for(;;){
-    // Scan through table looking for exited children.
     havekids = 0;
     for(p = ptable.proc; p < &ptable.proc[NPROC]; p++){
       if(p->parent != curproc)
         continue;
       havekids = 1;
       if(p->state == ZOMBIE){
-        // Found one.
         *retime = p->retime;
         *rutime = p->rutime;
         *stime = p->stime;
@@ -756,7 +754,6 @@ wait2(int *retime, int *rutime, int *stime) {
         p->killed = 0;
         p->state = UNUSED;
 
-        // Reset stats.
         p->ctime = 0;
         p->retime = 0;
         p->rutime = 0;
@@ -766,36 +763,29 @@ wait2(int *retime, int *rutime, int *stime) {
         return pid;
       }
     }
-    // No point waiting if we don't have any children.
     if(!havekids || curproc->killed){
       release(&ptable.lock);
       return -1;
     }
 
-    // Wait for children to exit.  (See wakeup1 call in proc_exit.)
-    sleep(curproc, &ptable.lock);  //DOC: wait-sleep
+    sleep(curproc, &ptable.lock);
   }
 }
 
 
 void 
-update_stats(void)
-{
+update_times(void) {
   struct proc *p;
   acquire(&ptable.lock);
 
-  for(p = ptable.proc; p < &ptable.proc[NPROC]; p++)
-  {
-    if (p->state == SLEEPING)
-    {
+  for(p = ptable.proc; p < &ptable.proc[NPROC]; p++) {
+    if (p->state == SLEEPING) {
       p->stime++;
     }
-    else if (p->state == RUNNABLE)
-    {
+    else if (p->state == RUNNABLE) {
       p->retime++;
     }
-    else if (p->state == RUNNING)
-    {
+    else if (p->state == RUNNING) {
       p->rutime++;
     }
   }

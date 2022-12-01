@@ -121,7 +121,7 @@ int             wait(void);
 void            wakeup(void*);
 void            yield(void);
 int             wait2(int*, int*, int*);
-void            update_stats(void);
+void            update_times(void);
 int             user_yield(void);
 int             set_tickets(int);
 

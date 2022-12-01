@@ -41,12 +41,6 @@ int main(int argc, char* argv[])  {
     for (i = 0; i < 3 * n; i++) {
         int pid = fork();
 
-        // struct proc *p;
-        // p->pid = pid;
-        // set_tickets(procTickets[i]);
-
-        // printf(1, "Tickets = %d\n", p->tickets);
-
         if (pid == 0) {
             int pidAux = getpid() % 3;
             

@@ -93,9 +93,7 @@ sys_uptime(void)
 int 
 sys_wait2(void)
 {
-  int *retime;
-  int *rutime;
-  int *stime;
+  int *retime, *rutime, *stime;
 
   if (argptr(0, (char**)&retime, sizeof(int)) < 0) {
     return -1;
@@ -119,13 +117,13 @@ sys_yield(void)
 
 int 
 sys_set_tickets(void) {
-  int number_of_tickets;
+  int qntTickets;
 	
   // Erro
-	if(argint(0, &number_of_tickets) < 0)
+	if(argint(0, &qntTickets) < 0)
 		return -1;
 
-	set_tickets(number_of_tickets);
+	set_tickets(qntTickets);
 
 	return 0;
 /*

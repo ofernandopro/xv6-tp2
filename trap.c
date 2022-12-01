@@ -51,7 +51,7 @@ trap(struct trapframe *tf)
     if(cpuid() == 0){
       acquire(&tickslock);
       ticks++;
-      update_stats();
+      update_times();
       wakeup(&ticks);
       release(&tickslock);
     }

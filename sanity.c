@@ -81,7 +81,7 @@ int main(int argc, char* argv[])  {
         int pidChildAux = pidChild % 3;
         char *type = getTypeProc(pidChildAux);
 
-        printf(1, "Pid = %d. Type = %s, RETIME = %d, RUTIME = %d, STIME = %d\n", pidChild, type, retime, rutime, stime);
+        printf(1, "Pid = %d, type = %s, RETIME = %d, RUTIME = %d, STIME = %d\n", pidChild, type, retime, rutime, stime);
 
         readyTime[pidChildAux] += retime;
         sleepingTime[pidChildAux] += stime;
@@ -102,6 +102,8 @@ int main(int argc, char* argv[])  {
         printf(1, "Average ready time: %d\n", averageReady[j]);
         printf(1, "Average sleeping time: %d\n", averageSleeping[j]);
         printf(1, "Average turnaround time: %d\n", averageTurnaround[j]); 
+
+        printf(1, "\n"); 
     }
 
     exit();

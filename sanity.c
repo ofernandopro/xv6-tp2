@@ -2,6 +2,7 @@
 #include "stat.h"
 #include "user.h"
 #include "fcntl.h"
+#include "proc.h"
 
 char* getTypeProc(int i) {
     if (i == 0) {
@@ -36,8 +37,16 @@ int main(int argc, char* argv[])  {
         turnaroundTime[i] = 0;
     }
 
+    int procTickets = {10, 30, 20};
+
     for (i = 0; i < 3 * n; i++) {
         int pid = fork();
+
+        struct proc *p;
+        p->pid = pid;
+        set_tickets(procTickets[i]);
+
+        printf(1, "Tickets = %d\n", p->tickets);
 
         if (pid == 0) {
             int pidAux = getpid() % 3;

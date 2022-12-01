@@ -1,4 +1,3 @@
-
 #include "types.h"
 #include "stat.h"
 #include "user.h"
@@ -94,7 +93,7 @@ int main(int argc, char* argv[])  {
 
     for (j = 0; j < 3; j++) {
         printf(1, "Type %d\n", j);
-        printf(1, "Amount of processes: %d\n", qntProcs[j]);
+        printf(1, "Number of processes: %d\n", qntProcs[j]);
 
         averageReady[j] = readyTime[j] / qntProcs[j];
         averageSleeping[j] = sleepingTime[j] / qntProcs[j];
@@ -102,9 +101,7 @@ int main(int argc, char* argv[])  {
         
         printf(1, "Average ready time: %d\n", averageReady[j]);
         printf(1, "Average sleeping time: %d\n", averageSleeping[j]);
-        printf(1, "Average turnaround time: %d\n", averageTurnaround[j]);
-        
-        printf(1, "\n\n");
+        printf(1, "Average turnaround time: %d\n", averageTurnaround[j]); 
     }
 
     exit();

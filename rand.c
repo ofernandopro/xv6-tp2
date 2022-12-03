@@ -74,6 +74,7 @@ genrand()
 // Returns in the half-open interval [0, max]
 long random_at_most(long max)
 {
+    
     unsigned long
         // max <= RAND_MAX < ULONG_MAX, so this is okay.
         num_bins = (unsigned long)max + 1,

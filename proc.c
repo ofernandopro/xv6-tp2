@@ -202,7 +202,7 @@ fork(void)
   }
   np->sz = curproc->sz;
   np->parent = curproc;
-  //np->tickets = curproc->tickets; // Processo filho herda a qnt de tickets do Pai
+  np->tickets = curproc->tickets; // Processo filho herda a qnt de tickets do Pai
   *np->tf = *curproc->tf;
 
   // Clear %eax so that fork returns 0 in the child.
@@ -805,14 +805,7 @@ set_tickets(int tickets) {
   //myproc()->tickets = tickets;  
   //cprintf("Tickets -> %d\n", myproc()->tickets);
   myproc()->tickets = tickets;
-  struct proc *p;
-  acquire(&ptable.lock);
-
-  for(p = ptable.proc; p < &ptable.proc[NPROC]; p++) {
-    cprintf("Tickets -> %d\n", p->tickets);
-  }
-
-  release(&ptable.lock);
+  
 
   return 0;
 }

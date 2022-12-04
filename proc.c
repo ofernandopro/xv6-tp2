@@ -368,13 +368,13 @@ scheduler(void)
     // Loop over process table looking for process to run.
     acquire(&ptable.lock);
 
-    totalTickets = getTotalTickets();
+    totalTickets = 1000;
     //cprintf("qntTickets: %d\n", p->tickets);
     //cprintf("totalTickets: %d\n", totalTickets);
 
     if (totalTickets > 0) {
       //winnerTicket = lcg_rand(runval);
-      winnerTicket = getWinnerProc();
+      winnerTicket = 20;
       cprintf("WINNER TICKET: %d\n", winnerTicket);
 
       if (totalTickets < winnerTicket) {

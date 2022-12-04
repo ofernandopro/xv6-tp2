@@ -280,23 +280,24 @@ int
 wait(void)
 {
   struct proc *p;
-  int havekids, pid;
+  int haveChildren, pid;
   struct proc *curproc = myproc();
   
   acquire(&ptable.lock);
   for(;;){
     // Scan through table looking for exited children.
-    havekids = 0;
+    haveChildren = 0;
     for(p = ptable.proc; p < &ptable.proc[NPROC]; p++){
       if(p->parent != curproc)
         continue;
-      havekids = 1;
+      haveChildren = 1;
       if(p->state == ZOMBIE){
         // Found one.
         pid = p->pid;
         kfree(p->kstack);
         p->kstack = 0;
         freevm(p->pgdir);
+
         p->pid = 0;
         p->parent = 0;
         p->name[0] = 0;
@@ -314,7 +315,7 @@ wait(void)
     }
 
     // No point waiting if we don't have any children.
-    if(!havekids || curproc->killed){
+    if(!haveChildren || curproc->killed){
       release(&ptable.lock);
       return -1;
     }
@@ -731,15 +732,15 @@ procdump(void)
 int 
 wait2(int *retime, int *rutime, int *stime) {
   struct proc *p;
-  int havekids, pid;
+  int haveChildren, pid;
   struct proc *curproc = myproc();
   acquire(&ptable.lock);
   for(;;){
-    havekids = 0;
+    haveChildren = 0;
     for(p = ptable.proc; p < &ptable.proc[NPROC]; p++){
       if(p->parent != curproc)
         continue;
-      havekids = 1;
+      haveChildren = 1;
       if(p->state == ZOMBIE){
         *retime = p->retime;
         *rutime = p->rutime;
@@ -763,7 +764,7 @@ wait2(int *retime, int *rutime, int *stime) {
         return pid;
       }
     }
-    if(!havekids || curproc->killed){
+    if(!haveChildren || curproc->killed){
       release(&ptable.lock);
       return -1;
     }
@@ -774,7 +775,7 @@ wait2(int *retime, int *rutime, int *stime) {
 
 
 void 
-update_times(void) {
+set_times(void) {
   struct proc *p;
   acquire(&ptable.lock);
 

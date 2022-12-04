@@ -8,8 +8,6 @@
 #include "spinlock.h"
 #include "rand.h"
 
-static int all_tickets = 0;
-
 struct {
   struct spinlock lock;
   struct proc proc[NPROC];
@@ -204,7 +202,7 @@ fork(void)
   }
   np->sz = curproc->sz;
   np->parent = curproc;
-  np->tickets = curproc->tickets; // Processo filho herda a qnt de tickets do Pai
+  //np->tickets = curproc->tickets; // Processo filho herda a qnt de tickets do Pai
   *np->tf = *curproc->tf;
 
   // Clear %eax so that fork returns 0 in the child.

@@ -126,10 +126,4 @@ sys_set_tickets(void) {
 	set_tickets(qntTickets);
 
 	return 0;
-/*
-  int n;  
-  if(argint(0, &n) < 0)  
-   return -1;  
-  proc->tickets = n;  
-  return n; */
 }

@@ -368,13 +368,13 @@ scheduler(void)
     // Loop over process table looking for process to run.
     acquire(&ptable.lock);
 
-    totalTickets = getTotalTickets();
+    totalTickets = 1000;
     //cprintf("qntTickets: %d\n", p->tickets);
     //cprintf("totalTickets: %d\n", totalTickets);
 
     if (totalTickets > 0) {
       //winnerTicket = lcg_rand(runval);
-      winnerTicket = getWinnerProc();
+      winnerTicket = 30;
       //cprintf("WINNER TICKET: %d\n", winnerTicket);
 
       if (totalTickets < winnerTicket) {
@@ -392,11 +392,6 @@ scheduler(void)
           continue;
         }
 
-        //cprintf("WINNER TICKET: %s - tickets: %d\n", p->name, p->tickets);
-
-        // Switch to chosen process.  It is the process's job
-        // to release ptable.lock and then reacquire it
-        // before jumping back to us.
         c->proc = p;
         switchuvm(p);
         p->state = RUNNING;

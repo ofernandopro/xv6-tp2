@@ -375,7 +375,7 @@ scheduler(void)
     if (totalTickets > 0) {
       winnerTicket = lcg_rand(runval);
       //winnerTicket = getProcWithLessTickets();
-      cprintf("WINNER TICKET: %d\n", winnerTicket);
+      //cprintf("WINNER TICKET: %d\n", winnerTicket);
 
       if (totalTickets < winnerTicket) {
         winnerTicket %= totalTickets; // choose is in the interval of tickets

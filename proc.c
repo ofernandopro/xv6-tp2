@@ -375,7 +375,7 @@ scheduler(void)
     if (totalTickets > 0) {
       winnerTicket = lcg_rand(runval);
       //winnerTicket = getProcWithLessTickets();
-      //cprintf("WINNER TICKET: %d\n", winnerTicket);
+      cprintf("WINNER TICKET: %d\n", winnerTicket);
 
       if (totalTickets < winnerTicket) {
         winnerTicket %= totalTickets; // choose is in the interval of tickets
@@ -414,6 +414,36 @@ scheduler(void)
   
 }
 
+int getWinnerProc(void)
+{
+  struct proc *p;
+  int maxTicket = -1;
+  int pid = 0;
+
+  for (p = ptable.proc; p < &ptable.proc[NPROC]; p++) {
+    if (p->state == RUNNABLE) {
+      if (p->tickets > maxTicket) {
+        maxTicket = p->tickets;
+        pid = p->pid;
+      }
+    }
+  }
+  /*
+  int total = 0;
+  for (p = ptable.proc; p < &ptable.proc[NPROC]; p++) {
+    if (p->state == RUNNABLE) {
+      if (p->pid != pid) {
+        total += p->tickets;
+      } else {
+        break;
+      }
+    }
+  }*/
+  //cprintf("Tickets Total: %d\n", total+1);
+  return maxTicket;
+}
+
+/*
 int getProcWithLessTickets(void)
 {
   struct proc *p;
@@ -440,7 +470,7 @@ int getProcWithLessTickets(void)
   }
   //cprintf("Tickets Total: %d\n", total+1);
   return total+1;
-}
+}*/
 /*
 int settickets(int pid, int tickets) {
   struct proc *p;

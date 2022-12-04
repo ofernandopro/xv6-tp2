@@ -804,7 +804,17 @@ user_yield(void)
 int 
 set_tickets(int tickets) {
   //cprintf("Tickets -> %d\n", tickets);
-  myproc()->tickets = tickets;  
+  //myproc()->tickets = tickets;  
   //cprintf("Tickets -> %d\n", myproc()->tickets);
+  myproc()->tickets = tickets;
+  struct proc *p;
+  acquire(&ptable.lock);
+
+  for(p = ptable.proc; p < &ptable.proc[NPROC]; p++) {
+    cprintf("Tickets -> %d\n", p->tickets);
+  }
+
+  release(&ptable.lock);
+
   return 0;
 }

@@ -79,15 +79,15 @@ int main(int argc, char* argv[])  {
 
     for (i = 0; i < 3 * n; i++) {
         int retime, rutime, stime;
-        int pidChild = wait2(&retime, &rutime, &stime);
-        int pidChildAux = pidChild % 3;
-        char *type = getTypeProc(pidChildAux);
+        int pidFilho = wait2(&retime, &rutime, &stime);
+        int pidFilhoAux = pidFilho % 3;
+        char *type = getTypeProc(pidFilhoAux);
 
-        printf(1, "Pid = %d, type = %s, RETIME = %d, RUTIME = %d, STIME = %d\n", pidChild, type, retime, rutime, stime);
+        printf(1, "Pid = %d, type = %s, RETIME = %d, RUTIME = %d, STIME = %d\n", pidFilho, type, retime, rutime, stime);
 
-        readyTime[pidChildAux] += retime;
-        sleepingTime[pidChildAux] += stime;
-        turnaroundTime[pidChildAux] += retime + rutime + stime;
+        readyTime[pidFilhoAux] += retime;
+        sleepingTime[pidFilhoAux] += stime;
+        turnaroundTime[pidFilhoAux] += retime + rutime + stime;
     }
 
     int averageReady[3], averageSleeping[3], averageTurnaround[3];
@@ -96,7 +96,6 @@ int main(int argc, char* argv[])  {
     for (j = 0; j < 3; j++) {
         printf(1, "Type %d\n", j);
         printf(1, "Number of processes: %d\n", qntProcs[j]);
-
         averageReady[j] = readyTime[j] / qntProcs[j];
         averageSleeping[j] = sleepingTime[j] / qntProcs[j];
         averageTurnaround[j] = turnaroundTime[j] / qntProcs[j];

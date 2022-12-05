@@ -350,7 +350,7 @@ int getTotalTickets(void) {
 //  - swtch to start running that process
 //  - eventually that process transfers control
 //      via swtch back to the scheduler.
-
+/*
 void
 scheduler(void)
 {
@@ -409,7 +409,8 @@ scheduler(void)
   }
   
 }
-/*
+*/
+
 void
 scheduler(void)
 {
@@ -444,7 +445,7 @@ scheduler(void)
     release(&ptable.lock);
 
   }
-}*/
+}
 
 int getWinnerProc(void)
 {
@@ -820,7 +821,7 @@ user_yield(void)
 
 int 
 set_tickets(int tickets) {
-  
+
   myproc()->tickets = tickets;
   
   return 0;

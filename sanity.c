@@ -15,7 +15,7 @@ char* getTypeProc(int i) {
 
 int main(int argc, char* argv[])  {
 
-    if (argc > 2) {
+    if (argc > 8) {
         printf(1, "n deve ser um inteiro >= 0.\n");
         exit();
     }

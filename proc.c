@@ -350,6 +350,7 @@ int getTotalTickets(void) {
 //  - swtch to start running that process
 //  - eventually that process transfers control
 //      via swtch back to the scheduler.
+
 void
 scheduler(void)
 {
@@ -368,13 +369,13 @@ scheduler(void)
     // Loop over process table looking for process to run.
     acquire(&ptable.lock);
 
-    totalTickets = 1000;
+    totalTickets = getTotalTickets();
     //cprintf("qntTickets: %d\n", p->tickets);
     //cprintf("totalTickets: %d\n", totalTickets);
 
     if (totalTickets > 0) {
       //winnerTicket = lcg_rand(runval);
-      winnerTicket = 30;
+      winnerTicket = getWinnerProc();
       //cprintf("WINNER TICKET: %d\n", winnerTicket);
 
       if (totalTickets < winnerTicket) {
@@ -444,9 +445,6 @@ scheduler(void)
 
   }
 }*/
-
-
-
 
 int getWinnerProc(void)
 {
@@ -822,7 +820,7 @@ user_yield(void)
 
 int 
 set_tickets(int tickets) {
-  //cprintf("Tickets -> %d\n", myproc()->tickets);
+  
   myproc()->tickets = tickets;
   
   return 0;

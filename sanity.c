@@ -36,7 +36,10 @@ int main(int argc, char* argv[])  {
         turnaroundTime[i] = 0;
     }
 
-    int procTickets[] = {10, 30, 20, 15, 20, 5};
+    int *procTickets = malloc(n*3);
+    for (i = 1; i <= 3 * n; i++) {
+        procTickets[i] = 100 % i*3;
+    }
 
     for (i = 0; i < 3 * n; i++) {
         int pid = fork();

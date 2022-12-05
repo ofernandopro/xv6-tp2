@@ -15,7 +15,7 @@ char* getTypeProc(int i) {
 
 int main(int argc, char* argv[])  {
 
-    if (argc > 8) {
+    if (argc > 2) {
         printf(1, "n deve ser um inteiro >= 0.\n");
         exit();
     }
@@ -39,7 +39,7 @@ int main(int argc, char* argv[])  {
     for (i = 0; i < 3 * n; i++) {
         int pid = fork();
 
-        set_tickets(argv[i+2]);
+        set_tickets(i*5);
 
         if (pid == 0) {
             int pidAux = getpid() % 3;

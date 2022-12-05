@@ -362,11 +362,9 @@ lottery_scheduler(void)
   struct proc *p;
   struct cpu *c = mycpu();
   c->proc = 0;
-  int totalTickets;
-  int winnerTicket;
+  int totalTickets, winnerTicket;
   
   for(;;){
-    
     // Enable interrupts on this processor.
     sti();
 
